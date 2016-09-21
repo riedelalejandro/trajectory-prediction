@@ -1,0 +1,38 @@
+{
+    "name": "riedelalejandro/trajectory-prediction",
+    "description": "predict a date when a distance is completed . The prediction is based on traveled distances",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alejandro Riedel",
+            "email": "riedelalejandro@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "illuminate/support": "^5.3",
+        "nesbot/carbon": "^1.21"
+    },
+    "autoload": {
+        "psr-4": {
+            "TrajectoryPrediction\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Test\\": "tests/"
+        }
+    },
+    "require-dev": {
+        "fzaninotto/faker": "^1.6",
+        "mockery/mockery": "^0.9.5",
+        "phpunit/phpunit": "^5.5",
+        "fabpot/php-cs-fixer": "^1.12"
+    },
+    "scripts": {
+        "test": "./vendor/bin/phpunit; ./vendor/bin/php-cs-fixer fix -v --diff --dry-run;",
+        "phpunit": "./vendor/bin/phpunit;",
+        "phpcs": "./vendor/bin/php-cs-fixer fix -v --diff --dry-run;"
+    }
+}
