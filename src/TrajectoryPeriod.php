@@ -57,4 +57,13 @@ class TrajectoryPeriod
     {
         return $this->distance;
     }
+
+    /**
+     * @param $distance
+     * @return int
+     */
+    public function increment($distance)
+    {
+        return $this->distance += $distance;
+    }
 }
