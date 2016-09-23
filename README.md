@@ -7,7 +7,7 @@ Predict a date when a distance will be completed . The prediction is based on mo
 Trajectory Prediction can be installed with composer.
 
 ```sh
-$ composer require "riedelalejandro/trajectory-prediction"
+$  composer require "riedelalejandro/trajectory-prediction":"~1.0"
 ```
 
 ### Usage
