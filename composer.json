@@ -1,7 +1,6 @@
 {
     "name": "riedelalejandro/trajectory-prediction",
     "description": "predict a date when a distance is completed . The prediction is based on traveled distances",
-    "type": "project",
     "license": "MIT",
     "authors": [
         {
