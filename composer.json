@@ -9,7 +9,7 @@
             "email": "riedelalejandro@gmail.com"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "require": {
         "illuminate/support": "^5.3",
         "nesbot/carbon": "^1.21"
@@ -26,13 +26,11 @@
     },
     "require-dev": {
         "fzaninotto/faker": "^1.6",
-        "mockery/mockery": "^0.9.5",
         "phpunit/phpunit": "^5.5",
         "fabpot/php-cs-fixer": "^1.12"
     },
     "scripts": {
-        "test": "./vendor/bin/phpunit; ./vendor/bin/php-cs-fixer fix -v --diff --dry-run;",
-        "phpunit": "./vendor/bin/phpunit;",
-        "phpcs": "./vendor/bin/php-cs-fixer fix -v --diff --dry-run;"
+        "phpunit": "./vendor/bin/phpunit",
+        "phpcs": "./vendor/bin/php-cs-fixer fix ."
     }
 }

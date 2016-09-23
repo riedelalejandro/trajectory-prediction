@@ -10,8 +10,7 @@ use TrajectoryPrediction\Predictor;
 use TrajectoryPrediction\PredictorException;
 
 /**
- * Class PredictorTest
- * @package Test\Src
+ * Class PredictorTest.
  */
 class PredictorTest extends TestCase
 {
