@@ -5,35 +5,37 @@ namespace TrajectoryPrediction;
 use Carbon\Carbon;
 
 /**
- * Interface DistanceLog
- * @package TrajectoryPrediction
+ * Class DistanceHistory.
  */
-class DistanceLog
+class DistanceHistory
 {
     /**
      * @var Carbon
      */
-    private $createdAt;
+    private $date;
+    /**
+     * @var int
+     */
     private $distance;
 
     /**
      * DistanceLog constructor.
-     * @param $createdAt
-     * @param $distance
+     *
+     * @param Carbon $date
+     * @param int    $distance
      */
-    public function __construct(Carbon $createdAt, $distance)
+    public function __construct(Carbon $date, $distance)
     {
-        $this->createdAt = $createdAt;
+        $this->date = $date;
         $this->distance = $distance;
     }
-
 
     /**
      * @return Carbon
      */
-    public function getCreatedDate()
+    public function getDate()
     {
-        return $this->createdAt;
+        return $this->date;
     }
 
     /**

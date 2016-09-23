@@ -2,6 +2,8 @@
 
 namespace TrajectoryPrediction;
 
+use Carbon\Carbon;
+
 /**
  * Class TrajectoryPeriod.
  */
@@ -60,10 +62,19 @@ class TrajectoryPeriod
 
     /**
      * @param $distance
+     *
      * @return int
      */
     public function increment($distance)
     {
         return $this->distance += $distance;
+    }
+
+    /**
+     * @return float
+     */
+    public function getDailyDistance()
+    {
+        return round($this->distance / Carbon::create($this->year, $this->month)->daysInMonth);
     }
 }
