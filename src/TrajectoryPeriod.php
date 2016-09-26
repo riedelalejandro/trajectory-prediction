@@ -1,5 +1,4 @@
 <?php
-
 namespace TrajectoryPrediction;
 
 use Carbon\Carbon;

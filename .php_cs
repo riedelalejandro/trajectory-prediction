@@ -1,0 +1,23 @@
+<?php
+return Symfony\CS\Config\Config::create()
+    ->level(Symfony\CS\FixerInterface::SYMFONY_LEVEL)
+    ->fixers([
+        '-yoda_conditions',
+        '-psr0',
+        '-single_blank_line_before_namespace',
+        '-blankline_after_open_tag',
+        '-phpdoc_separation',
+        '-unalign_double_arrow',
+        '-concat_without_spaces',
+        '-braces',
+        '-single_quote',
+        'concat_with_spaces',
+        'ordered_use',
+        'short_array_syntax'
+    ])
+    ->finder(
+        Symfony\CS\Finder\DefaultFinder::create()
+            ->in([
+                realpath(__DIR__.'/src'),
+            ])
+    );

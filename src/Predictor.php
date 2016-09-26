@@ -1,5 +1,4 @@
 <?php
-
 namespace TrajectoryPrediction;
 
 use Carbon\Carbon;
@@ -79,6 +78,7 @@ class Predictor
 
         return $this;
     }
+
     /**
      * @param Carbon $date
      * @param int    $distance
@@ -103,7 +103,8 @@ class Predictor
      */
     public function getTrajectoryPeriods()
     {
-        if (is_null($this->trajectoryPeriods)) {
+        if (is_null($this->trajectoryPeriods))
+        {
             $this->calculateTrajectoryPeriods();
         }
 
@@ -121,30 +122,37 @@ class Predictor
         $previousTrajectory = null;
 
         /** @var DistanceHistory $distanceHistory */
-        foreach ($this->getDistanceHistories() as $distanceHistory) {
-            if (!$previousTrajectory) {
+        foreach ($this->getDistanceHistories() as $distanceHistory)
+        {
+            if (!$previousTrajectory)
+            {
                 $previousTrajectory = $distanceHistory->getDistance() - round($distanceHistory->getDate()->day * $this->getDefaultMonthly() / $distanceHistory->getDate()->daysInMonth);
             }
 
-            if (!$previousCalculatedDate) {
+            if (!$previousCalculatedDate)
+            {
                 $previousCalculatedDate = $distanceHistory->getDate()->copy()->firstOfMonth();
             }
 
             $diffInKM = $distanceHistory->getDistance() - $previousTrajectory;
             $diffInDays = $previousCalculatedDate->diffInDays($distanceHistory->getDate()) + 1;
 
-            while ($previousCalculatedDate->lt($distanceHistory->getDate())) {
+            while ($previousCalculatedDate->lt($distanceHistory->getDate()))
+            {
                 /** @var Carbon $lastPeriodDate */
                 $lastPeriodDate = $previousCalculatedDate->copy()->lastOfMonth();
-                if ($lastPeriodDate->gt($distanceHistory->getDate())) {
+                if ($lastPeriodDate->gt($distanceHistory->getDate()))
+                {
                     $lastPeriodDate = $distanceHistory->getDate();
                 }
 
-                $trajectoryPeriod = $trajectoryPeriods->filter(function (TrajectoryPeriod $trajectoryPeriod) use ($previousCalculatedDate) {
+                $trajectoryPeriod = $trajectoryPeriods->filter(function (TrajectoryPeriod $trajectoryPeriod) use ($previousCalculatedDate)
+                {
                     return $trajectoryPeriod->getYear() == $previousCalculatedDate->year && $trajectoryPeriod->getMonth() == $previousCalculatedDate->month;
                 })->first();
 
-                if (!$trajectoryPeriod) {
+                if (!$trajectoryPeriod)
+                {
                     $trajectoryPeriod = new TrajectoryPeriod($previousCalculatedDate->year, $previousCalculatedDate->month, 0);
                     $trajectoryPeriods->push($trajectoryPeriod);
                 }
@@ -174,11 +182,13 @@ class Predictor
      */
     public function predict($distanceTo)
     {
-        if ($this->getDistanceHistories()->isEmpty()) {
+        if ($this->getDistanceHistories()->isEmpty())
+        {
             throw new PredictorException('Missing distance histories');
         }
 
-        if (!$this->getDefaultMonthly()) {
+        if (!$this->getDefaultMonthly())
+        {
             throw new PredictorException('Missing default monthly');
         }
 
@@ -187,7 +197,8 @@ class Predictor
         $distanceFrom = $lastUpdate->getDistance();
         $initialDate = $lastInitialDate = $lastUpdate->getDate();
 
-        while ($distanceFrom < $distanceTo) {
+        while ($distanceFrom < $distanceTo)
+        {
             $initialDate = $lastInitialDate;
             $maxPeriodDate = $initialDate->copy()->lastOfMonth();
             $historyDate = Carbon::create(null, $initialDate->month)->addYear(-1);
@@ -195,13 +206,17 @@ class Predictor
             $days = $maxPeriodDate->diffInDays($initialDate) + 1;
 
             /** @var TrajectoryPeriod $trajectoryPeriod */
-            $trajectoryPeriod = $this->getTrajectoryPeriods()->filter(function (TrajectoryPeriod $trajectoryPeriod) use ($historyDate) {
+            $trajectoryPeriod = $this->getTrajectoryPeriods()->filter(function (TrajectoryPeriod $trajectoryPeriod) use ($historyDate)
+            {
                 return $trajectoryPeriod->getYear() == $historyDate->year && $trajectoryPeriod->getMonth() == $historyDate->month;
             })->first();
 
-            if ($trajectoryPeriod) {
+            if ($trajectoryPeriod)
+            {
                 $dailyDistance = $trajectoryPeriod->getDailyDistance();
-            } else {
+            }
+            else
+            {
                 $dailyDistance = round($this->getDefaultMonthly() / $initialDate->daysInMonth);
             }
 
