@@ -9,71 +9,53 @@ use Carbon\Carbon;
 class TrajectoryPeriod
 {
     /**
-     * @var int
+     * @var Carbon
      */
-    private $year;
+    private $startDate;
+    /**
+     * @var Carbon
+     */
+    private $endDate;
     /**
      * @var int
      */
-    private $month;
-    /**
-     * @var int
-     */
-    private $distance;
+    private $dailyDistance;
 
     /**
      * TrajectoryPeriod constructor.
-     *
-     * @param int $year
-     * @param int $month
-     * @param int $distance
+     * @param Carbon $startDate
+     * @param Carbon $endDate
+     * @param int $dailyDistance
      */
-    public function __construct($year, $month, $distance)
+    public function __construct(Carbon $startDate, Carbon $endDate, $dailyDistance)
     {
-        $this->year = $year;
-        $this->month = $month;
-        $this->distance = $distance;
+        $this->startDate = $startDate;
+        $this->endDate = $endDate;
+        $this->dailyDistance = $dailyDistance;
+    }
+
+    /**
+     * @return Carbon
+     */
+    public function getStartDate()
+    {
+        return $this->startDate;
+    }
+
+    /**
+     * @return Carbon
+     */
+    public function getEndDate()
+    {
+        return $this->endDate;
     }
 
     /**
      * @return int
-     */
-    public function getYear()
-    {
-        return $this->year;
-    }
-
-    /**
-     * @return int
-     */
-    public function getMonth()
-    {
-        return $this->month;
-    }
-
-    /**
-     * @return int
-     */
-    public function getDistance()
-    {
-        return $this->distance;
-    }
-
-    /**
-     * @param $distance
-     *
-     * @return int
-     */
-    public function increment($distance)
-    {
-        return $this->distance += $distance;
-    }
-
-    /**
-     * @return float
      */
     public function getDailyDistance()
     {
-        return round($this->distance / Carbon::create($this->year, $this->month)->daysInMonth);
+        return $this->dailyDistance;
     }
+
 }

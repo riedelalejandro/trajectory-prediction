@@ -9,6 +9,8 @@ use Illuminate\Support\Collection;
  */
 class Predictor
 {
+    const PERIOD_TYPE = 'monthly';
+    
     /**
      * @var int
      */
@@ -118,8 +120,13 @@ class Predictor
     {
         $trajectoryPeriods = new Collection();
         /** @var Carbon $previousCalculatedDate */
-        $previousCalculatedDate = null;
-        $previousTrajectory = null;
+
+        $lastDistanceHistory = null;
+
+        $periodStartDate = null;
+        $periodEndDate = null;
+        $periodPassedDays = 0;
+        $periodPassedDistance = 0;
 
         /** @var DistanceHistory $distanceHistory */
         foreach ($this->getDistanceHistories() as $distanceHistory)
@@ -148,12 +155,12 @@ class Predictor
 
                 $trajectoryPeriod = $trajectoryPeriods->filter(function (TrajectoryPeriod $trajectoryPeriod) use ($previousCalculatedDate)
                 {
-                    return $trajectoryPeriod->getYear() == $previousCalculatedDate->year && $trajectoryPeriod->getMonth() == $previousCalculatedDate->month;
+                    return $trajectoryPeriod->getEndDate()->lte($previousCalculatedDate) && $trajectoryPeriod->getStartDate()->gte($previousCalculatedDate);
                 })->first();
 
                 if (!$trajectoryPeriod)
                 {
-                    $trajectoryPeriod = new TrajectoryPeriod($previousCalculatedDate->year, $previousCalculatedDate->month, 0);
+                    $trajectoryPeriod = new TrajectoryPeriod($previousCalculatedDate, $previousCalculatedDate->lastOfMonth(), 0);
                     $trajectoryPeriods->push($trajectoryPeriod);
                 }
 
